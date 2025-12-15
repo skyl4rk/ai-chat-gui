@@ -1,6 +1,6 @@
-The link to the working file is here:
+ai-chat-gui provides a single python file that creates a graphic user interface to chat with various LLM ai models available on openrouter.ai. The system prompt is set up to be a python tutor, but can be modified as needed.
 
-https://github.com/skyl4rk/ai-assistant/blob/master/project/ai-assistant.py
+The working file is ai-assistant.py.
 
 You will need an openrouter api key for this script. You will need to make a payment to openrouter for the non-free models.
 
@@ -8,9 +8,13 @@ https://openrouter.ai
 
 Set up an .env file using the .example.env file as a template.
 
-The script will create a context.txt in the same directory. This file will show the last few queries and responses, 5,000 characters in length. The script sends the context file along with your query to the LLM model.
+The script will create a context.txt file in the directory where ai-assistant.py is located. This file will show the last few queries and responses, 5,000 characters in length. The script sends the context file along with your query to the LLM model.
 
 Modify the system prompt variable to your needs.
+
+Install packages: openrouter datetime python-dotenv requests
+
+You may also use the requirements.txt file to install packages.
 
 Change the models listed in the combobox as you prefer. The format is the same as listed on openrouter.ai.
 
