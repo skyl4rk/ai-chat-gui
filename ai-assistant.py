@@ -5,23 +5,38 @@ from openrouter import OpenRouter
 import os
 from datetime import datetime  # timezone
 import time
+import requests
 
 
 def openrouter_connect(api_key, or_model, system, user, context):
+    print("System length: " + str(len(system)))
+    print("User length: " + str(len(user)))
+    print("Context length: " + str(len(context)))
     try:
-        with OpenRouter(api_key=api_key) as client:
-            response = client.chat.send(
-                model=or_model,
-                messages=[
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": or_model,
+                "messages": [
                     {"role": "system", "content": system},
                     {"role": "user", "content": user},
                     {"role": "assistant", "content": context},
                 ],
-                max_tokens=1000,
-            )
-            return response.choices[0].message.content
-    except Exception as e:
+                "max_tokens": 3000,
+                "transforms": ["middle-out"],  # This works in the raw API
+            },
+        )
+        response.raise_for_status()
+        data = response.json()
+        return data["choices"][0]["message"]["content"]
+    except requests.exceptions.RequestException as e:
         return f"Error: {str(e)}"
+    except (KeyError, IndexError) as e:
+        return f"Error parsing response: {str(e)}"
 
 
 def clicked():
