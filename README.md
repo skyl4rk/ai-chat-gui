@@ -18,3 +18,8 @@ You may also use the requirements.txt file to install packages.
 
 Change the models listed in the combobox as you prefer. The format is the same as listed on openrouter.ai.
 
+Compressed Context Chatbot
+
+This is an experimental version of the ai-assistant. The CCC summarizes older conversation turns and reduces the volume of text that the LLM has to review with each new turn. The hope is that this will lead to more focused responses and higher quality chat, with less hallucination or off topic rambling. It may lead to reduced response times.
+
+The Compressed Contex Chatbot has not been evaluated as to whether its performance is better than the standard ai-assistant.py. 

@@ -1,3 +1,44 @@
+Query: how are classes in python useful?
+Response: In Python, classes are fundamental to object-oriented programming (OOP). They act as blueprints for creating objects, which are instances of the class. This approach helps in organizing code by bundling related data (attributes) and behavior (methods) into a single unit.
+
+Here's why and how classes are useful:
+
+1.  **Code Organization and Reusability**:
+    *   Classes allow you to group related data and functions, making your code more organized and easier to manage, especially in larger projects.
+    *   You can define a class once and create multiple objects from it, thus reusing code efficiently.
+    *   Inheritance allows you to create new classes that reuse, extend, and modify the behavior defined in other classes. This promotes a "don't repeat yourself" (DRY) principle. [realpython.com/python-classes/](https://realpython.com/python-classes/)
+
+2.  **State Management**:
+    *   Classes are ideal for managing the state of objects. Each object has its own set of attributes (variables) that hold its unique data.
+    *   For example, if you're building a game, a `Player` class can hold attributes like `score`, `health`, and `position`, and methods like `move()` or `attack()` to manage the player's state and actions. [pybit.es/articles/when-classes/](https://pybit.es/articles/when-classes/)
+
+3.  **Encapsulation**:
+    *   Classes allow you to encapsulate data and methods, hiding the internal implementation details from the outside world. This means you can change the internal workings of a class without affecting the code that uses it, as long as the public interface remains the same. [realpython.com/python-classes/](https://realpython.com/python-classes/)
+
+4.  **Modeling Real-World Entities**:
+    *   Classes enable you to model real-world objects or concepts in your code. For instance, you can create a `Car` class with attributes like `make`, `model`, and `color`, and methods like `start_engine()` or `drive()`. [geeksforgeeks.org/python-classes-and-objects/](https://www.geeksforgeeks.org/python-classes-and-objects/)
+
+5.  **Abstraction**:
+    *   Classes help in abstracting complex systems. You can define a high-level interface (through methods) that hides the complex underlying logic. [realpython.com/python-classes/](https://realpython.com/python-classes/)
+
+6.  **Polymorphism**:
+    *   Through inheritance and common interfaces, classes support polymorphism, allowing objects of different classes to be treated as objects of a common superclass. This makes your code more flexible and extensible. [realpython.com/python-classes/](https://realpython.com/python-classes/)
+
+**When to use classes**:
+
+*   When you need to manage **state** (data that needs to persist over time).
+*   For **larger projects** where code organization, reusability, and maintainability are crucial. [pybit.es/articles/when-classes/](https://pybit.es/articles/when-classes/)
+*   To implement **encapsulation** and create clear APIs.
+*   To model **real-world objects** or complex concepts.
+*   When you are dealing with hierarchies of related objects and want to leverage **inheritance**. [docs.python.org/3/tutorial/classes.html](https://docs.python.org/3/tutorial/classes.html)
+
+**When to potentially avoid classes**:
+
+*   For very small, one-off scripts where a simple function might suffice.
+*   If the only "behavior" is a single method, a function might be cleaner. [pybit.es/articles/when-classes/](https://pybit.es/articles/when-classes/)
+*   If you can achieve the same with context managers or generators, those might be more "Pythonic" for specific tasks. [pybit.es/articles/when-classes/](https://pybit.es/articles/when-classes/)
+
+In summary, classes are a powerful tool for structuring code, managing data and behavior together, and building complex, maintainable applications in Python.
 Query: what does the openrouter parameter transform middle-out do?
 Response: The `middle-out` transform in OpenRouter is a feature designed to help manage prompts that exceed a model's context window size. It works by intelligently compressing the prompt, prioritizing the beginning and end of the conversation while truncating or removing messages from the middle.
 
@@ -9,78 +50,4 @@ Here's why and how it works:
     *   Removing or shortening messages from the middle.
 *   **Why the middle?** Research suggests that LLMs tend to pay less attention to information in the middle of a sequence compared to the beginning and end [arxiv.org/abs/2307.03172].
 *   **When it's used:**
-    *   For models with a context length of 8k tokens or less, `middle-out` is often enabled by default.
-    *   You can explicitly enable it by setting `transforms: ["middle-out"]` in your API request [openrouter.ai/docs/guides/features/message-transforms].
-    *   To disable it, you can set `transforms: []`.
-*   **Beyond Token Limits:** This transform can also help when a model has a limit on the *number* of messages (e.g., some Anthropic Claude models have a 1000-message limit). `middle-out` will ensure roughly half the messages are kept from the start and half from the end to meet this message count.
-
-In essence, `middle-out` is a practical way to handle long conversations or prompts by preserving the most important context while making the input fit within the model's constraints, useful when perfect recall of every single detail isn't critical.
-Query: what are the best python coding llm's available on openrouter?
-Response: Here are the top Python coding LLMs available on OpenRouter, based on recent rankings and user feedback:
-
-*   **`x-ai/grok-code-fast-1`**: Currently ranks very high for coding tasks on OpenRouter.
-*   **`anthropic/claude-4.5-sonnet-20250929`**: A top-tier model known for its strong coding capabilities and reasoning.
-*   **`openai/gpt-oss-120b`**: A powerful model from OpenAI, consistently performing well in coding benchmarks.
-*   **`qwen/qwen3-coder-480b-a35b-07-25`**: A large and capable model from Qwen, specifically tuned for coding.
-*   **`google/gemini-2.5-pro-preview-20251117`**: Google's advanced model, showing strong performance across various tasks, including coding.
-*   **`deepseek/deepseek-v3-base:free`**: Noted for its strengths in technical domains.
-*   **`mistralai/mistral-small-3.1-24b-instruct`**: A performant model from Mistral AI, good for general coding tasks.
-*   **`openrouter/quasar-alpha`**: A free model that performs competitively for coding tasks.
-
-For the best experience, models like Claude 4.5 Sonnet, GPT-4.1, and Gemini 2.5 Pro are often recommended for complex problem-solving and code refactoring. For cost-effective alternatives that still perform well, consider Mistral Devstral Small, DeepSeek v3, and Qwen3 235B.
-
-Here's how you can use one of these models with Python via the OpenRouter API:
-
-```python
-import requests
-import json
-
-# Replace with your actual OpenRouter API key
-API_KEY = "YOUR_OPENROUTER_API_KEY"
-# Example: Using 'x-ai/grok-code-fast-1' as a top-performing coding model
-MODEL_ID = "x-ai/grok-code-fast-1"
-
-headers = {
-    "Authorization": f"Bearer {API_KEY}",
-    "Content-Type": "application/json"
-}
-
-# Example: Asking for Python code to reverse a string
-payload = {
-    "model": MODEL_ID,
-    "messages": [
-        {"role": "system", "content": "You are a helpful AI assistant that writes Python code."},
-        {"role": "user", "content": "Write a Python function to reverse a string."}
-    ],
-    "temperature": 0.7,
-    "max_tokens": 512,
-    "stream": False
-}
-
-try:
-    response = requests.post(
-        "https://openrouter.ai/api/v1/chat/completions",
-        headers=headers,
-        data=json.dumps(payload)
-    )
-    response.raise_for_status() # Raise an exception for bad status codes (4xx or 5xx)
-
-    result = response.json()
-    if "choices" in result and result["choices"]:
-        code_solution = result["choices"][0]["message"]["content"]
-        print("Generated Python Code:\n")
-        print(code_solution)
-    else:
-        print("No 'choices' found in the response.")
-
-except requests.exceptions.RequestException as e:
-    print(f"An error occurred: {e}")
-except json.JSONDecodeError:
-    print("Failed to decode JSON response.")
-
-```
-
-Remember to replace `"YOUR_OPENROUTER_API_KEY"` with your actual API key and `"x-ai/grok-code-fast-1"` with your chosen model.
-
-[openrouter.ai/rankings/programming](https://openrouter.ai/rankings/programming)
-[medium.com/@o
+    *   For models with
